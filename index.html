@@ -14,18 +14,31 @@
 	
 	<!-- begin JS -->
     <script src="js/jquery-1.7.min.js" type="text/javascript"></script>
-    <script src="js/persist-min.js" type="text/javascript"></script>
-    <script src="js/jquery.timer.js" type="text/javascript"></script>
+    <script src="js/persist-min.js" type="text/javascript"></script>    
     <script src="js/jquery.polyglot.language.switcher.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
 				effect: 'fade',
                 testMode: true,
-                callback: function(language_id){
-                    alert("The selected language is: "+language_id);
-                    return true;
+                onChange: function(evt){
+                    alert("The selected language is: "+evt.selectedItem);
                 }
+//                ,afterLoad: function(evt){
+//                    alert("The selected language has been loaded");
+//                },
+//                beforeOpen: function(evt){
+//                    alert("before open");
+//                },
+//                afterOpen: function(evt){
+//                    alert("after open");
+//                },
+//                beforeClose: function(evt){
+//                    alert("before close");
+//                },
+//                afterClose: function(evt){
+//                    alert("after close");
+//                }
 			});
         });
     </script>
