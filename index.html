@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!-- begin meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="Polyglot is a language switcher jQuery and WordPress plugin that allows you to create a bilingual or multilingual site or blog.">
+    <meta name="keywords" content="Polyglot, Polyglot language switcher, language switcher, jQuery language switcher, WordPress language switcher, jQuery plugin, WordPress plugin">
+    <meta name="author" content="Ixtendo">
+	<!-- end meta -->
+	
+	<!-- begin CSS -->
+    <link href="css/polyglot-language-switcher.css" type="text/css" rel="stylesheet">
+	<!-- end CSS -->
+	
+	<!-- begin JS -->
+    <script src="js/jquery-1.7.min.js" type="text/javascript"></script>
+    <script src="js/persist-min.js" type="text/javascript"></script>
+    <script src="js/jquery.timer.js" type="text/javascript"></script>
+    <script src="js/jquery.polyglot.language.switcher.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
+				effect: 'fade',
+                testMode: true,
+                callback: function(language_id){
+                    alert("The selected language is: "+language_id);
+                    return true;
+                }
+			});
+        });
+    </script>
+	<!-- end JS -->
+    <title>&quot;Polyglot&quot; Language Switcher</title>
+</head>
+
+<body>
+<!-- begin container -->
+<div id="container" style="width: 400px; margin: 140px auto 40px;">
+	<!-- begin language switcher -->
+    <div id="polyglotLanguageSwitcher">
+		<form action="#">
+			<select id="polyglot-language-options">
+				<option id="en" value="en" selected>English</option>
+				<option id="fr" value="fr">Fran&ccedil;ais</option>
+				<option id="de" value="de">Deutsch</option>
+				<option id="it" value="it">Italiano</option>
+				<option id="es" value="es">Espa&ntilde;ol</option>
+			</select>
+		</form>
+	</div>
+	<!-- end language switcher -->
+    
+</div>
+<!-- end container -->
+</body>
+</html>
+
