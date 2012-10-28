@@ -4,7 +4,7 @@
 /* ---------------------------------------------------------------------- */
 /* "Polyglot" Language Switcher
  /* ----------------------------------------------------------------------
- Version: 2.0
+ Version: 2.1
  Author: Ixtendo
  Author URI: http://www.ixtendo.com
  License: MIT License
@@ -153,24 +153,28 @@
         }
 
         function open() {
-            triggerEvent({name:'beforeOpen', element:rootElement, instance:ls});
-            aElement.addClass("active");
-            doAnimation(true);
-            setTimeout(function () {
-                isOpen = true;
-                triggerEvent({name:'afterOpen', element:rootElement, instance:ls});
-            }, 100);
+            if(!isOpen){
+                triggerEvent({name:'beforeOpen', element:rootElement, instance:ls});
+                aElement.addClass("active");
+                doAnimation(true);
+                setTimeout(function () {
+                    isOpen = true;
+                    triggerEvent({name:'afterOpen', element:rootElement, instance:ls});
+                }, 100);
+            }
         }
 
         function close() {
-            triggerEvent({name:'beforeClose', element:rootElement, instance:ls});
-            doAnimation(false);
-            aElement.removeClass("active");
-            isOpen = false;
-            if (closePopupTimer && closePopupTimer.active) {
-                closePopupTimer.clearTimer();
+            if(isOpen){
+                triggerEvent({name:'beforeClose', element:rootElement, instance:ls});
+                doAnimation(false);
+                aElement.removeClass("active");
+                isOpen = false;
+                if (closePopupTimer && closePopupTimer.active) {
+                    closePopupTimer.clearTimer();
+                }
+                triggerEvent({name:'afterClose', element:rootElement, instance:ls});
             }
-            triggerEvent({name:'afterClose', element:rootElement, instance:ls});
         }
 
         function suspendCloseAction() {
@@ -202,9 +206,7 @@
         }
 
         function doAction(item) {
-            if (isOpen) {
-                close();
-            }
+            close();
             var selectedAElement = $(item).children(":first-child");
 
             var selectedId = $(selectedAElement).attr("id");
@@ -229,12 +231,10 @@
 
         function installListeners() {
             $(document).click(function () {
-                if (isOpen) {
-                    close();
-                }
+                close();
             });
             $(document).keyup(function (e) {
-                if (e.which == 27 && isOpen) {
+                if (e.which == 27) {
                     close();
                 }
             });
@@ -272,9 +272,7 @@
                     aElement = $("<a id=\"" + $(this).attr("id") + "\" class=\"current\" href=\"#\">" + $(this).text() + " <span class=\"trigger\">&raquo;</span></a>");
                     if (settings.openMode == 'hover') {
                         aElement.hover(function () {
-                            if (!isOpen) {
-                                open();
-                            }
+                            open();
                             suspendCloseAction();
                         }, function () {
                             resumeCloseAction();
@@ -282,9 +280,7 @@
                     } else {
                         aElement.click(
                             function () {
-                                if (!isOpen) {
-                                    open();
-                                }
+                                open();
                             }
                         );
                     }
@@ -371,6 +367,7 @@
             close();
         };
         triggerEvent({name:'afterLoad', element:rootElement, instance:ls});
+        return ls;
     };
 
     var ls = $.fn.polyglotLanguageSwitcher;
