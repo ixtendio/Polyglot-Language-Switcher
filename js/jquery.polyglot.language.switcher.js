@@ -4,7 +4,7 @@
 /* ---------------------------------------------------------------------- */
 /* "Polyglot" Language Switcher
  /* ----------------------------------------------------------------------
- Version: 2.1
+ Version: 2.2
  Author: Ixtendo
  Author URI: http://www.ixtendo.com
  License: MIT License
@@ -138,10 +138,6 @@
         var settings = $.extend({}, ls.defaults, op);
         var closePopupTimer;
         var isStaticWebSite = settings.websiteType == 'static';
-        var store;
-        if (isStaticWebSite) {
-            store = new Persist.Store('Polyglot Language Switcher');
-        }
 
         init();
         installListeners();
@@ -224,9 +220,6 @@
             aElement.attr("id", selectedId);
             aElement.text(selectedText);
             aElement.append(innerSpanElement);
-            if (isStaticWebSite) {
-                store.set('lang', selectedId);
-            }
         }
 
         function installListeners() {
@@ -248,18 +241,24 @@
 
         function init() {
             var selectedItem;
-            $("#" + rootElementId + " > form > select > option").each(function () {
-                var selected = $(this).attr("selected");
-                if (isStaticWebSite) {
-                    var selectedId;
-                    store.get('lang', function (ok, val) {
-                        if (ok) {
-                            selectedId = val;
-                        }
-                    });
-                    if (selectedId == $(this).attr("id")) {
-                        selected = true;
+            var options = $("#" + rootElementId + " > form > select > option");
+            if (isStaticWebSite) {
+                var selectedId;
+                var url = window.location.href;
+                options.each(function(){
+                    var id = $(this).attr("id");
+                    if(url.indexOf('/'+id+'/')>=0){
+                        selectedId = id;
                     }
+                });
+            }
+            options.each(function () {
+                var id = $(this).attr("id");
+                var selected;
+                if (isStaticWebSite) {
+                    selected = selectedId === id;
+                }else{
+                    selected = $(this).attr("selected")
                 }
                 var liElement = toLiElement($(this));
                 if (selected) {
@@ -301,7 +300,9 @@
             var text = $(option).text();
             var liElement;
             if (isStaticWebSite) {
-                var urlPage = 'http://' + document.domain + '/' + settings.pagePrefix + id + '/' + settings.indexPage;
+                var url = window.location.href;
+                var page = url.substring(url.lastIndexOf("/")+1);
+                var urlPage = 'http://' + document.domain + '/' + settings.pagePrefix + id + '/' + page;
                 liElement = $("<li><a id=\"" + id + "\" href=\"" + urlPage + "\">" + text + "</a></li>");
             } else {
                 var href = document.URL.replace('#', '');
@@ -378,7 +379,6 @@
         effect:'slide',
         paramName:'lang',
         pagePrefix:'',
-        indexPage:'index.html',
         websiteType:'dynamic',
         testMode:false,
         onChange:NaN,
