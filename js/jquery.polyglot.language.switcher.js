@@ -296,7 +296,7 @@
 
         function toLiElement(option) {
             var id = $(option).attr("id");
-            var value = $(option).attr("value");
+            var value = $(option).val();
             var text = $(option).text();
             var liElement;
             if (isStaticWebSite) {
