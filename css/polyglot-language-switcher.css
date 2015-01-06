@@ -88,8 +88,10 @@ License URI: http://www.opensource.org/licenses/mit-license.php
 	width: 9px;
 	height: 5px;
 	text-indent: -10000em;
-	top: 0.5em; /* 6px */
+	top: 0;
+	bottom: 0;
 	right: 6px;
+	margin: auto;
 }
 
 #polyglotLanguageSwitcher a.current:link span.trigger, #polyglotLanguageSwitcher a.current:visited span.trigger {
