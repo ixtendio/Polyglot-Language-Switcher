@@ -1,4 +1,6 @@
 Polyglot-Language-Switcher
 ==========================
 
-The &amp;quot;Polyglot&amp;quot; Language Switcher jQuery plugin allows you easily switch between the languages supported by your website. It was conceived as a drop-down menu with flag icons.
+The Polyglot Language Switcher jQuery plugin allows you easily switch between the languages supported by your website. It was conceived as a drop-down menu with flag icons.
+
+A demo page can be found here: http://www.ixtendo.com/polyglot-language-switcher-jquery-plugin/
